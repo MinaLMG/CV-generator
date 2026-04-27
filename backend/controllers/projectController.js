@@ -19,6 +19,12 @@ export const getProjects = async (req, res) => {
 export const createProject = async (req, res) => {
   const supabase = getSupabase();
   try {
+    if (req.body.start_date && req.body.end_date) {
+      if (new Date(req.body.start_date) > new Date(req.body.end_date)) {
+        return res.status(400).json({ error: 'Start date must be before end date.' });
+      }
+    }
+
     const { data, error } = await supabase
       .from('projects')
       .insert([{ ...req.body, profile_id: req.user.id }])
@@ -36,6 +42,12 @@ export const updateProject = async (req, res) => {
   const { id } = req.params;
   const supabase = getSupabase();
   try {
+    if (req.body.start_date && req.body.end_date) {
+      if (new Date(req.body.start_date) > new Date(req.body.end_date)) {
+        return res.status(400).json({ error: 'Start date must be before end date.' });
+      }
+    }
+
     const { data, error } = await supabase
       .from('projects')
       .update(req.body)

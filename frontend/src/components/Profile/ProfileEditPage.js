@@ -17,12 +17,21 @@ const ProjectModal = ({ project, onSave, onClose }) => {
       start_date: '', end_date: '', technologies_used: []
     }
   );
+  const [isCurrent, setIsCurrent] = useState(project ? !project.end_date : false);
   const [techInput, setTechInput] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleIsCurrentChange = (e) => {
+    const checked = e.target.checked;
+    setIsCurrent(checked);
+    if (checked) {
+      setForm({ ...form, end_date: '' });
+    }
+  };
 
   const addTech = () => {
     if (!techInput.trim()) return;
@@ -35,10 +44,23 @@ const ProjectModal = ({ project, onSave, onClose }) => {
 
   const handleSave = async () => {
     if (!form.name || !form.role) { setError('Project name and role are required.'); return; }
+    if (!isCurrent && form.start_date && form.end_date) {
+      if (new Date(form.start_date) > new Date(form.end_date)) {
+        setError('Start date must be before end date.');
+        return;
+      }
+    }
     setSaving(true);
     setError('');
+    
+    // Prepare payload
+    const payload = { ...form };
+    if (isCurrent) {
+      payload.end_date = null;
+    }
+
     try {
-      await onSave(form);
+      await onSave(payload);
       onClose();
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to save project.');
@@ -75,8 +97,14 @@ const ProjectModal = ({ project, onSave, onClose }) => {
             <input className={styles.formInput} type="date" name="start_date" value={form.start_date?.split('T')[0] || ''} onChange={handleChange} />
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.formLabel}>End Date</label>
-            <input className={styles.formInput} type="date" name="end_date" value={form.end_date?.split('T')[0] || ''} onChange={handleChange} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <label className={styles.formLabel}>End Date</label>
+              <label style={{ fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.3rem', color: '#64748b' }}>
+                <input type="checkbox" checked={isCurrent} onChange={handleIsCurrentChange} />
+                Present
+              </label>
+            </div>
+            <input className={styles.formInput} type="date" name="end_date" value={form.end_date?.split('T')[0] || ''} onChange={handleChange} disabled={isCurrent} />
           </div>
           <div className={styles.formGroupFull}>
             <label className={styles.formLabel}>Description</label>

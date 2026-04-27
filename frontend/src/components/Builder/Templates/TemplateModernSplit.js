@@ -16,12 +16,18 @@ const GithubIcon = ({ size, color }) => (
   </svg>
 );
 
-const TemplateModernSplit = ({ data, themeColor, fontFamily }) => {
+const TemplateModernSplit = ({ data, themeColor, fontFamily, fontSize }) => {
   if (!data) return null;
 
   const formatDate = (dateStr) => {
     if (!dateStr) return 'Present';
     return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  };
+
+  const getBaseSize = () => {
+    if (fontSize === 'small') return '8.5pt';
+    if (fontSize === 'large') return '10.5pt';
+    return '9.5pt';
   };
 
   // Modern Split uses a lighter tint of the theme color for the side panel background
@@ -32,7 +38,7 @@ const TemplateModernSplit = ({ data, themeColor, fontFamily }) => {
   const sideBgColor = `rgba(${hexToRgb(themeColor)}, 0.08)`;
 
   return (
-    <div className={styles.modernContainer} style={{ fontFamily }}>
+    <div className={styles.modernContainer} style={{ fontFamily, fontSize: getBaseSize() }}>
       {/* ── LEFT COLUMN (Main Content - approx 70%) ── */}
       <div className={styles.modernMain}>
 

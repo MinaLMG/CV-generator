@@ -16,7 +16,7 @@ ul {
   padding: 0.8in;
   color: #1a1a1a;
   line-height: 1.5;
-  font-size: 10pt;
+  font-size: 1.00em;
 }
 
 .atsHeader {
@@ -25,14 +25,14 @@ ul {
 }
 
 .atsName {
-  font-size: 24pt;
+  font-size: 2.40em;
   font-weight: 700;
   margin: 0 0 0.25rem;
   letter-spacing: 0.5px;
 }
 
 .atsJobTitle {
-  font-size: 12pt;
+  font-size: 1.20em;
   color: #4b5563;
   font-weight: 500;
   margin: 0 0 0.75rem;
@@ -43,7 +43,7 @@ ul {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
-  font-size: 9pt;
+  font-size: 0.90em;
   color: #4b5563;
 }
 
@@ -58,7 +58,7 @@ ul {
 }
 
 .atsSectionTitle {
-  font-size: 12pt;
+  font-size: 1.20em;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -91,19 +91,19 @@ ul {
 }
 
 .atsProjectRole {
-  font-size: 11pt;
+  font-size: 1.10em;
   font-weight: 700;
   color: #1a1a1a;
 }
 
 .atsProjectCompany {
-  font-size: 10pt;
+  font-size: 1.00em;
   font-style: italic;
   color: #4b5563;
 }
 
 .atsProjectDate {
-  font-size: 9pt;
+  font-size: 0.90em;
   color: #4b5563;
   font-weight: 500;
 }
@@ -123,7 +123,7 @@ ul {
 }
 
 .atsProjectTech {
-  font-size: 9pt;
+  font-size: 0.90em;
   color: #4b5563;
 }
 
@@ -137,7 +137,7 @@ ul {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 10pt;
+  font-size: 1.00em;
 }
 
 .atsSkillDot {
@@ -155,13 +155,14 @@ ul {
   min-height: 100%; /* Fill A4 */
   color: #334155;
   line-height: 1.6;
-  font-size: 9.5pt;
+  font-size: 0.95em;
 }
 
 /* Left Main Content */
 .modernMain {
   flex: 7; /* ~70% */
-  padding: 0.8in 0.5in 0.8in 0.8in;
+  padding: 0.8in 0 0 0.8in;
+  min-height: 297mm;
 }
 
 .modernHeader {
@@ -184,7 +185,7 @@ ul {
 }
 
 .modernName {
-  font-size: 19pt;
+  font-size: 1.90em;
   font-weight: 800;
   margin: 0 0 0.25rem;
   line-height: 1.1;
@@ -194,7 +195,7 @@ ul {
 }
 
 .modernJobTitle {
-  font-size: 12pt;
+  font-size: 1.20em;
   color: #64748b;
   font-weight: 500;
   margin: 0;
@@ -207,7 +208,7 @@ ul {
 }
 
 .modernSectionTitle {
-  font-size: 13pt;
+  font-size: 1.30em;
   font-weight: 700;
   margin: 0 0 1rem;
   text-transform: uppercase;
@@ -258,7 +259,7 @@ ul {
 }
 
 .modernProjectRole {
-  font-size: 11.5pt;
+  font-size: 1.15em;
   font-weight: 700;
   color: #0f172a;
   margin: 0;
@@ -266,14 +267,14 @@ ul {
 }
 
 .modernProjectCompany {
-  font-size: 10pt;
+  font-size: 1.00em;
   font-weight: 600;
   color: #475569;
   margin-top: 0.2rem;
 }
 
 .modernProjectDate {
-  font-size: 8.5pt;
+  font-size: 0.85em;
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -293,6 +294,7 @@ ul {
 .modernSidebar {
   flex: 3; /* ~30% */
   padding: 0.8in 0.6in 0.8in 0.5in;
+  min-height: 297mm;
 }
 
 .modernSideSection {
@@ -300,7 +302,7 @@ ul {
 }
 
 .modernSideTitle {
-  font-size: 11pt;
+  font-size: 1.10em;
   font-weight: 700;
   margin: 0 0 1rem;
   text-transform: uppercase;
@@ -317,7 +319,7 @@ ul {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 8.5pt;
+  font-size: 0.85em;
   color: #334155;
 }
 
@@ -346,7 +348,7 @@ ul {
 }
 
 .modernSkillName {
-  font-size: 8.5pt;
+  font-size: 0.85em;
   font-weight: 600;
   color: #334155;
 }
@@ -362,4 +364,472 @@ ul {
 .modernSkillBarFill {
   height: 100%;
   border-radius: 2px;
+}
+
+/* =========================================
+   TEMPLATE 3: ENHANCV MODERN (Timeline)
+   ========================================= */
+.enhancvContainer {
+  padding: 0.8in 0.6in 0.8in 0.8in;
+  color: #333;
+  line-height: 1.5;
+}
+
+.enhancvHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.enhancvHeaderLeft {
+  flex: 1;
+}
+
+.enhancvName {
+  font-size: 2.8em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 0.1em;
+  letter-spacing: -0.5px;
+}
+
+.enhancvJobTitle {
+  font-size: 1.3em;
+  font-weight: 700;
+  margin: 0 0 0.8em;
+}
+
+.enhancvContactList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2em;
+  font-size: 0.9em;
+  color: #555;
+  font-weight: 500;
+}
+
+.enhancvContactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.enhancvPhotoWrapper {
+  margin-left: 2em;
+}
+
+.enhancvPhoto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f1f5f9;
+}
+
+.enhancvSection {
+  margin-bottom: 2em;
+}
+
+.enhancvSectionTitle {
+  font-size: 1.2em;
+  font-weight: 800;
+  margin: 0 0 1em;
+  letter-spacing: 1px;
+}
+
+.enhancvSummaryText {
+  text-align: justify;
+  font-size: 0.95em;
+  color: #444;
+}
+
+.enhancvTimelineContainer {
+  position: relative;
+}
+
+.enhancvTimelineLine {
+  position: absolute;
+  left: 120px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #333;
+  opacity: 0.2;
+}
+
+.enhancvTimelineItem {
+  display: flex;
+  position: relative;
+  margin-bottom: 1.8em;
+}
+
+.enhancvTimelineItem:last-child {
+  margin-bottom: 0;
+}
+
+.enhancvTimelineLeft {
+  width: 105px;
+  text-align: left;
+  padding-right: 15px;
+}
+
+.enhancvDate {
+  font-size: 0.85em;
+  margin-bottom: 0.2em;
+}
+
+.enhancvTimelineLocation {
+  font-size: 0.8em;
+  color: #777;
+}
+
+.enhancvTimelineDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #333;
+  position: absolute;
+  left: 117.5px;
+  top: 0.4em;
+}
+
+.enhancvTimelineRight {
+  flex: 1;
+  padding-left: 30px;
+}
+
+.enhancvRole {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0 0 0.2em;
+}
+
+.enhancvCompany {
+  font-size: 0.95em;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.6em;
+}
+
+.enhancvDesc {
+  font-size: 0.9em;
+  color: #444;
+  margin-bottom: 0.5em;
+}
+
+.enhancvBullets {
+  font-size: 0.9em;
+  color: #444;
+}
+
+.enhancvSkillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em;
+}
+
+.enhancvSkillBadge {
+  border: 1px solid;
+  padding: 0.3em 0.8em;
+  font-size: 0.85em;
+  font-weight: 500;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.02);
+}
+
+/* =========================================
+   TEMPLATE 4: DARK BLUE HEADER
+   ========================================= */
+.darkHeaderContainer {
+  min-height: 297mm;
+  color: #334155;
+  line-height: 1.5;
+  background: white;
+}
+
+.darkHeader {
+  padding: 0.8in 0.8in 0.5in;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.darkHeaderLeft {
+  flex: 1;
+}
+
+.darkName {
+  font-size: 3em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+}
+
+.darkJobTitle {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin: 0.2em 0 1em;
+}
+
+.darkContactList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.darkContactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.darkPhotoWrapper {
+  margin-left: 2em;
+}
+
+.darkPhoto {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.2);
+}
+
+.darkBody {
+  display: flex;
+  padding: 0.5in 0.8in 0.8in;
+  gap: 2em;
+}
+
+.darkColLeft {
+  flex: 6.5; /* ~65% */
+}
+
+.darkColRight {
+  flex: 3.5; /* ~35% */
+}
+
+.darkSection {
+  margin-bottom: 2.2em;
+}
+
+.darkSectionTitle {
+  font-size: 1.25em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 1em;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid;
+  letter-spacing: 1px;
+}
+
+.darkSummaryText {
+  text-align: justify;
+  font-size: 0.95em;
+  color: #475569;
+}
+
+.darkProjectList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.darkRole {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0 0 0.1em;
+}
+
+.darkCompany {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: #334155;
+}
+
+.darkMeta {
+  display: flex;
+  gap: 1.5em;
+  margin-top: 0.3em;
+  margin-bottom: 0.5em;
+  font-size: 0.85em;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.darkMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.darkDesc {
+  font-size: 0.9em;
+  color: #475569;
+  margin-bottom: 0.5em;
+}
+
+.darkBullets {
+  font-size: 0.9em;
+  color: #475569;
+}
+
+.darkSkillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em;
+}
+
+.darkSkillBadge {
+  border: 1px solid #cbd5e1;
+  padding: 0.4em 0.8em;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #334155;
+  border-radius: 4px;
+}
+
+
+/* =========================================
+   TEMPLATE 5: MINIMALIST
+   ========================================= */
+.minimalistContainer {
+  padding: 0.8in;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+.minimalistHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2em;
+}
+
+.minimalistHeaderLeft {
+  flex: 1;
+}
+
+.minimalistName {
+  font-size: 2.5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 0.1em;
+  letter-spacing: 1px;
+}
+
+.minimalistJobTitle {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #4b5563;
+  margin: 0 0 0.8em;
+}
+
+.minimalistContact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  font-size: 0.85em;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.minimalistContact span {
+  position: relative;
+}
+
+.minimalistContact span:not(:last-child):after {
+  content: "•";
+  position: absolute;
+  right: -0.6em;
+  color: #9ca3af;
+}
+
+.minimalistPhotoWrapper {
+  margin-left: 2em;
+}
+
+.minimalistPhoto {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f3f4f6;
+}
+
+.minimalistSection {
+  margin-bottom: 2em;
+}
+
+.minimalistSectionTitle {
+  font-size: 1.1em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: 0 0 0.8em;
+  letter-spacing: 1.5px;
+}
+
+.minimalistSummaryText {
+  font-size: 0.95em;
+  color: #374151;
+}
+
+.minimalistProjectList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.minimalistProjectHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4em;
+}
+
+.minimalistRoleGroup {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+}
+
+.minimalistRole {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin: 0;
+}
+
+.minimalistCompany {
+  font-size: 1em;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.minimalistDate {
+  font-size: 0.9em;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.minimalistDesc {
+  font-size: 0.95em;
+  color: #374151;
+  margin-bottom: 0.4em;
+}
+
+.minimalistBullets {
+  font-size: 0.95em;
+  color: #374151;
+}
+
+.minimalistSkillsText {
+  font-size: 0.95em;
+  color: #374151;
+  line-height: 1.8;
 }

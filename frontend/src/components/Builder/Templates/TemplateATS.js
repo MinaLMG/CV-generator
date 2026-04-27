@@ -17,7 +17,7 @@ const GithubIcon = ({ size, color }) => (
   </svg>
 );
 
-const TemplateATS = ({ data, themeColor, fontFamily }) => {
+const TemplateATS = ({ data, themeColor, fontFamily, fontSize }) => {
   if (!data) return null;
 
   const formatDate = (dateStr) => {
@@ -25,8 +25,14 @@ const TemplateATS = ({ data, themeColor, fontFamily }) => {
     return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
   };
 
+  const getBaseSize = () => {
+    if (fontSize === 'small') return '9pt';
+    if (fontSize === 'large') return '11pt';
+    return '10pt';
+  };
+
   return (
-    <div className={styles.atsContainer} style={{ fontFamily }}>
+    <div className={styles.atsContainer} style={{ fontFamily, fontSize: getBaseSize() }}>
       {/* ── HEADER ── */}
       <header className={styles.atsHeader}>
         <h1 className={styles.atsName} style={{ color: themeColor }}>{data.full_name}</h1>

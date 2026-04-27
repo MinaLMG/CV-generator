@@ -8,6 +8,9 @@ import styles from './BuilderPage.module.css';
 // Import Templates
 import TemplateATS from './Templates/TemplateATS';
 import TemplateModernSplit from './Templates/TemplateModernSplit';
+import TemplateEnhancvModern from './Templates/TemplateEnhancvModern';
+import TemplateDarkBlueHeader from './Templates/TemplateDarkBlueHeader';
+import TemplateMinimalist from './Templates/TemplateMinimalist';
 
 const BuilderPage = () => {
   const navigate = useNavigate();
@@ -19,9 +22,15 @@ const BuilderPage = () => {
   const [selectedTemplate, setSelectedTemplate] = useState('ats'); // 'ats' | 'modern'
   const [themeColor, setThemeColor] = useState('#2563eb');
   const [fontFamily, setFontFamily] = useState('Inter');
+  const [fontSize, setFontSize] = useState('medium'); // 'small' | 'medium' | 'large'
 
   const themeColors = ['#2563eb', '#16a34a', '#dc2626', '#9333ea', '#ea580c', '#475569', '#0ea5e9'];
   const fonts = ['Inter', 'Roboto', 'Lora', 'Merriweather', 'Outfit'];
+  const fontSizes = [
+    { value: 'small', label: 'Small' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'large', label: 'Large' }
+  ];
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -52,9 +61,12 @@ const BuilderPage = () => {
 
   // Active template resolver
   const renderTemplate = () => {
-    const commonProps = { data: profileData, themeColor, fontFamily };
+    const commonProps = { data: profileData, themeColor, fontFamily, fontSize };
     switch (selectedTemplate) {
       case 'modern': return <TemplateModernSplit {...commonProps} />;
+      case 'enhancv': return <TemplateEnhancvModern {...commonProps} />;
+      case 'darkblue': return <TemplateDarkBlueHeader {...commonProps} />;
+      case 'minimalist': return <TemplateMinimalist {...commonProps} />;
       case 'ats':
       default: return <TemplateATS {...commonProps} />;
     }
@@ -86,7 +98,25 @@ const BuilderPage = () => {
               className={`${styles.templateBtn} ${selectedTemplate === 'modern' ? styles.active : ''}`}
               onClick={() => setSelectedTemplate('modern')}
             >
-              Modern Split (3:1)
+              Modern Split
+            </button>
+            <button
+              className={`${styles.templateBtn} ${selectedTemplate === 'enhancv' ? styles.active : ''}`}
+              onClick={() => setSelectedTemplate('enhancv')}
+            >
+              Timeline
+            </button>
+            <button
+              className={`${styles.templateBtn} ${selectedTemplate === 'darkblue' ? styles.active : ''}`}
+              onClick={() => setSelectedTemplate('darkblue')}
+            >
+              Two Column Color
+            </button>
+            <button
+              className={`${styles.templateBtn} ${selectedTemplate === 'minimalist' ? styles.active : ''}`}
+              onClick={() => setSelectedTemplate('minimalist')}
+            >
+              Minimalist
             </button>
           </div>
         </div>
@@ -112,10 +142,20 @@ const BuilderPage = () => {
             className={styles.fontSelect}
             value={fontFamily}
             onChange={(e) => setFontFamily(e.target.value)}
-            style={{ fontFamily: fontFamily }}
+            style={{ fontFamily: fontFamily, marginBottom: '0.75rem' }}
           >
             {fonts.map(font => (
               <option key={font} value={font} style={{ fontFamily: font }}>{font}</option>
+            ))}
+          </select>
+          <label className={styles.sectionLabel} style={{ marginBottom: '0.4rem', marginTop: '1rem', display: 'block' }}>Size</label>
+          <select
+            className={styles.fontSelect}
+            value={fontSize}
+            onChange={(e) => setFontSize(e.target.value)}
+          >
+            {fontSizes.map(size => (
+              <option key={size.value} value={size.value}>{size.label}</option>
             ))}
           </select>
         </div>
