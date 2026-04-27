@@ -4,11 +4,20 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import AuthPage from './components/Auth/AuthPage';
 import HomePage from './components/Home/HomePage';
 import ProfileEditPage from './components/Profile/ProfileEditPage';
+import AdminPage from './components/Admin/AdminPage';
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useAuth();
   if (loading) return <div style={{ color: 'white', textAlign: 'center', marginTop: '20%' }}>Loading...</div>;
   if (!token) return <Navigate to="/auth" />;
+  return children;
+};
+
+const AdminRoute = ({ children }) => {
+  const { token, user, loading } = useAuth();
+  if (loading) return <div style={{ color: 'white', textAlign: 'center', marginTop: '20%' }}>Loading...</div>;
+  if (!token) return <Navigate to="/auth" />;
+  if (user?.role !== 'admin') return <Navigate to="/" />;
   return children;
 };
 
@@ -20,6 +29,7 @@ function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path="/profile/edit" element={<ProtectedRoute><ProfileEditPage /></ProtectedRoute>} />
+          <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

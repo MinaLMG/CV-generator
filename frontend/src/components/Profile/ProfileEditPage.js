@@ -345,11 +345,9 @@ const ProfileEditPage = () => {
       <nav className={styles.nav}>
         <h2 className={styles.logo}>CVGenie</h2>
         <div className={styles.navActions}>
-          {isComplete && (
-            <button className={styles.backBtn} onClick={() => navigate('/')}>
-              <ArrowLeft size={16} /> Back to Dashboard
-            </button>
-          )}
+          <button className={styles.backBtn} onClick={() => navigate('/')}>
+            <ArrowLeft size={16} /> Back to Dashboard
+          </button>
           <button onClick={logout} className={styles.logoutBtn}>
             <LogOut size={15} /> Logout
           </button>

@@ -39,7 +39,7 @@ export const signup = async (req, res) => {
     res.status(201).json({
       message: 'User created successfully',
       token,
-      user: { id: userData.id, email: userData.email, fullName }
+      user: { id: userData.id, email: userData.email, fullName, role: userData.role }
     });
   } catch (err) {
     res.status(500).json({ error: err.message || 'Server error during signup.' });
@@ -76,7 +76,7 @@ export const login = async (req, res) => {
     res.json({
       message: 'Login successful',
       token,
-      user: { id: user.id, email: user.email, fullName: user.profiles?.full_name }
+      user: { id: user.id, email: user.email, fullName: user.profiles?.full_name, role: user.role }
     });
   } catch (err) {
     res.status(500).json({ error: 'Server error during login.' });

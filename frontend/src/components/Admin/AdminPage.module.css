@@ -1,0 +1,381 @@
+.pageContainer {
+  min-height: 100vh;
+  background: #0f172a;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 4rem;
+}
+
+/* ── NAV ── */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  margin: 0;
+  color: #6366f1;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.adminBadge {
+  font-size: 0.7rem;
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+.navActions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.backBtn {
+  background: rgba(255,255,255,0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+.backBtn:hover { color: white; background: rgba(255,255,255,0.09); }
+
+.logoutBtn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+.logoutBtn:hover { background: rgba(239,68,68,0.2); }
+
+/* ── CONTENT ── */
+.content {
+  max-width: 1100px;
+  margin: 2.5rem auto;
+  padding: 0 2rem;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem;
+}
+
+.pageSubtitle {
+  color: #64748b;
+  margin: 0 0 2.5rem;
+  font-size: 0.9rem;
+}
+
+/* ── STAT CARDS ── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 0.2s;
+}
+.statCard:hover { border-color: rgba(99,102,241,0.3); }
+
+.statIcon {
+  background: rgba(99,102,241,0.12);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #818cf8;
+  margin-bottom: 0.25rem;
+}
+
+.statValue {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #f8fafc;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── SECTION ── */
+.section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.sectionIcon {
+  background: rgba(99,102,241,0.12);
+  padding: 0.35rem;
+  border-radius: 0.5rem;
+  display: flex;
+  color: #818cf8;
+}
+
+/* ── ADD SKILL FORM ── */
+.addSkillRow {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.addSkillInput {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.625rem;
+  padding: 0.625rem 1rem;
+  color: white;
+  outline: none;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+.addSkillInput:focus { border-color: #6366f1; }
+
+.addBtn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+.addBtn:hover { background: #4f46e5; }
+.addBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.errorMsg {
+  color: #f87171;
+  font-size: 0.8rem;
+  background: rgba(248,113,113,0.1);
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ── SKILLS TABLE ── */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  font-size: 0.75rem;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  vertical-align: middle;
+}
+
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.editInput {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid #6366f1;
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  color: white;
+  outline: none;
+  font-size: 0.875rem;
+  font-family: inherit;
+  width: 100%;
+}
+
+.usedByBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(99,102,241,0.1);
+  color: #818cf8;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.actionBtns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editBtn {
+  background: rgba(99,102,241,0.1);
+  color: #818cf8;
+  border: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s;
+}
+.editBtn:hover { background: rgba(99,102,241,0.2); }
+
+.saveBtn {
+  background: rgba(34,197,94,0.12);
+  color: #22c55e;
+  border: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s;
+}
+.saveBtn:hover { background: rgba(34,197,94,0.2); }
+
+.cancelBtn {
+  background: rgba(255,255,255,0.06);
+  color: #94a3b8;
+  border: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.cancelBtn:hover { background: rgba(255,255,255,0.1); }
+
+.deleteBtn {
+  background: rgba(239,68,68,0.1);
+  color: #f87171;
+  border: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s;
+}
+.deleteBtn:hover { background: rgba(239,68,68,0.2); }
+
+/* ── USERS TABLE ── */
+.roleBadge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.roleAdmin {
+  background: rgba(239,68,68,0.12);
+  color: #f87171;
+}
+
+.roleStaff {
+  background: rgba(99,102,241,0.12);
+  color: #818cf8;
+}
+
+.emptyState {
+  text-align: center;
+  color: #334155;
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+.loadingScreen {
+  min-height: 100vh;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-family: 'Inter', sans-serif;
+}

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import API from '../../services/api';
 import styles from './HomePage.module.css';
-import { LogOut, User as UserIcon, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { LogOut, User as UserIcon, CheckCircle, AlertCircle, Loader, Shield } from 'lucide-react';
 
 const HomePage = () => {
   const { user, logout } = useAuth();
@@ -57,6 +57,11 @@ const HomePage = () => {
             <span className={styles.statusBadgeIncomplete}>
               <AlertCircle size={14} /> Profile Incomplete
             </span>
+          )}
+          {user?.role === 'admin' && (
+            <button className={styles.adminBtn} onClick={() => navigate('/admin')}>
+              <Shield size={15} /> Admin Panel
+            </button>
           )}
           <button onClick={logout} className={styles.logoutBtn}>
             <LogOut size={16} />
