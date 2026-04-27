@@ -161,7 +161,7 @@ ul {
 /* Left Main Content */
 .modernMain {
   flex: 7; /* ~70% */
-  padding: 0.8in 0 0 0.8in;
+  padding: 0.8in 0.5in 0 0.8in;
   min-height: 297mm;
 }
 
