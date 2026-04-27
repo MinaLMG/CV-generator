@@ -35,7 +35,11 @@ const BuilderPage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await API.get('/profile/me');
+        const searchParams = new URLSearchParams(window.location.search);
+        const targetUserId = searchParams.get('userId');
+        
+        const endpoint = targetUserId ? `/admin/users/${targetUserId}/profile` : '/profile/me';
+        const res = await API.get(endpoint);
         setProfileData(res.data);
       } catch (err) {
         console.error('Failed to load profile data', err);

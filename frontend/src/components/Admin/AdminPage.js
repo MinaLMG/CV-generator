@@ -5,7 +5,7 @@ import API from '../../services/api';
 import styles from './AdminPage.module.css';
 import {
   ArrowLeft, LogOut, Users, Briefcase, Zap,
-  CheckCircle, XCircle, Plus, Pencil, Trash2, Save, X
+  CheckCircle, XCircle, Plus, Pencil, Trash2, Save, X, LayoutTemplate
 } from 'lucide-react';
 
 // ─── Skill Row (inline edit) ──────────────────────────────────────────────────
@@ -266,6 +266,7 @@ const AdminPage = () => {
                   <th>Job Title</th>
                   <th>Role</th>
                   <th>Joined</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -280,6 +281,15 @@ const AdminPage = () => {
                       </span>
                     </td>
                     <td>{formatDate(u.created_at)}</td>
+                    <td>
+                      <button 
+                        className={styles.editBtn} 
+                        onClick={() => navigate(`/cv-builder?userId=${u.id}`)}
+                        title="Build CV for this user"
+                      >
+                        <LayoutTemplate size={13} /> Build CV
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

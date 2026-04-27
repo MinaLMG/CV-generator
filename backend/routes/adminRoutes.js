@@ -5,7 +5,8 @@ import {
   adminGetAllSkills,
   adminCreateSkill,
   adminUpdateSkill,
-  adminDeleteSkill
+  adminDeleteSkill,
+  adminGetCompleteProfile
 } from '../controllers/adminController.js';
 import { authenticateToken, authorizeRole } from '../middleware/auth.js';
 
@@ -16,6 +17,7 @@ router.use(authenticateToken, authorizeRole(['admin']));
 
 router.get('/stats', getStats);
 router.get('/users', getAllUsers);
+router.get('/users/:userId/profile', adminGetCompleteProfile);
 
 router.get('/skills', adminGetAllSkills);
 router.post('/skills', adminCreateSkill);

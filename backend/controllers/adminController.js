@@ -65,6 +65,60 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+// ── Get Single User Profile (for Admin CV Builder) ──────────────────────────
+export const adminGetCompleteProfile = async (req, res) => {
+  const { userId } = req.params;
+  const supabase = getSupabase();
+  try {
+    // Fetch profile details
+    const { data: profile, error: profileErr } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+
+    if (profileErr) throw profileErr;
+
+    // Fetch user details (email)
+    const { data: user, error: userError } = await supabase
+        .from('users')
+        .select('email')
+        .eq('id', userId)
+        .single();
+    if(userError) throw userError;
+
+    // Fetch skills
+    const { data: skills, error: skillsErr } = await supabase
+      .from('profile_skills')
+      .select('proficiency, skills(id, name)')
+      .eq('profile_id', userId);
+
+    if (skillsErr) throw skillsErr;
+
+    // Fetch projects
+    const { data: projects, error: projectsErr } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('profile_id', userId)
+      .order('end_date', { ascending: false });
+
+    if (projectsErr) throw projectsErr;
+
+    res.json({
+      ...profile,
+      account_email: user.email,
+      skills: skills.map(s => ({
+        id: s.skills.id,
+        name: s.skills.name,
+        proficiency: s.proficiency
+      })),
+      projects
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch complete profile for admin view.' });
+  }
+};
+
 // ── Skills CRUD ──────────────────────────────────────────────────────────────
 export const adminGetAllSkills = async (req, res) => {
   const supabase = getSupabase();
