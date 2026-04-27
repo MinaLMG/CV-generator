@@ -28,6 +28,7 @@ CREATE TABLE skills (
 CREATE TABLE profile_skills (
   profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
   skill_id UUID REFERENCES skills(id) ON DELETE CASCADE,
+  proficiency INTEGER CHECK (proficiency BETWEEN 1 AND 100), -- Optional, skill level %
   PRIMARY KEY (profile_id, skill_id)
 );
 
