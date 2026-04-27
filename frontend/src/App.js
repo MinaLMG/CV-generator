@@ -5,6 +5,7 @@ import AuthPage from './components/Auth/AuthPage';
 import HomePage from './components/Home/HomePage';
 import ProfileEditPage from './components/Profile/ProfileEditPage';
 import AdminPage from './components/Admin/AdminPage';
+import BuilderPage from './components/Builder/BuilderPage';
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useAuth();
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path="/profile/edit" element={<ProtectedRoute><ProfileEditPage /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
+          <Route path="/cv-builder" element={<ProtectedRoute><BuilderPage /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

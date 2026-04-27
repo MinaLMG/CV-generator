@@ -5,7 +5,7 @@ import API from '../../services/api';
 import styles from './ProfileEditPage.module.css';
 import {
   ArrowLeft, LogOut, Plus, X, Pencil, Trash2,
-  Briefcase, Zap, AlertCircle
+  Briefcase, Zap, AlertCircle, User as UserIcon, Camera, Save
 } from 'lucide-react';
 
 // ─── Project Modal ────────────────────────────────────────────────────────────
@@ -253,6 +253,19 @@ const ProfileEditPage = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  const [profileDetails, setProfileDetails] = useState({
+    job_title: '',
+    experience_summary: '',
+    experience_years: 0,
+    phone: '',
+    current_email: '',
+    github_url: '',
+    linkedin_url: '',
+    photo_url: ''
+  });
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [photoUploading, setPhotoUploading] = useState(false);
+
   const [projects, setProjects] = useState([]);
   const [skills, setSkills] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
@@ -262,13 +275,24 @@ const ProfileEditPage = () => {
 
   const loadData = async () => {
     try {
-      const [projectsRes, skillsRes, statusRes] = await Promise.all([
-        API.get('/projects'),
-        API.get('/skills/profile'),
+      const [profileRes, statusRes] = await Promise.all([
+        API.get('/profile/me'),
         API.get('/profile/status')
       ]);
-      setProjects(projectsRes.data);
-      setSkills(skillsRes.data);
+      
+      const { projects: pData, skills: sData, ...details } = profileRes.data;
+      setProjects(pData || []);
+      setSkills(sData || []);
+      setProfileDetails({
+        job_title: details.job_title || '',
+        experience_summary: details.experience_summary || '',
+        experience_years: details.experience_years || 0,
+        phone: details.phone || '',
+        current_email: details.current_email || '',
+        github_url: details.github_url || '',
+        linkedin_url: details.linkedin_url || '',
+        photo_url: details.photo_url || ''
+      });
       setIsComplete(statusRes.data.isComplete);
     } catch (err) {
       console.error('Failed to load profile data', err);
@@ -278,6 +302,42 @@ const ProfileEditPage = () => {
   };
 
   useEffect(() => { loadData(); }, []);
+
+  const handleProfileChange = (e) => {
+    setProfileDetails({ ...profileDetails, [e.target.name]: e.target.value });
+  };
+
+  const saveProfileDetails = async () => {
+    setProfileSaving(true);
+    try {
+      await API.put('/profile/me', profileDetails);
+    } catch (err) {
+      console.error('Failed to save profile details', err);
+    } finally {
+      setProfileSaving(false);
+    }
+  };
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPhotoUploading(true);
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    try {
+      const res = await API.post('/upload/photo', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setProfileDetails(prev => ({ ...prev, photo_url: res.data.photo_url }));
+    } catch (err) {
+      console.error('Failed to upload photo', err);
+      alert('Failed to upload photo. Please try again.');
+    } finally {
+      setPhotoUploading(false);
+    }
+  };
 
   // ── Skills
   const handleRemoveSkill = async (skillId) => {
@@ -343,7 +403,7 @@ const ProfileEditPage = () => {
     <div className={styles.pageContainer}>
       {/* ── Nav */}
       <nav className={styles.nav}>
-        <h2 className={styles.logo}>CVGenie</h2>
+        <h2 className={styles.logo}>CV Genie</h2>
         <div className={styles.navActions}>
           <button className={styles.backBtn} onClick={() => navigate('/')}>
             <ArrowLeft size={16} /> Back to Dashboard
@@ -362,9 +422,80 @@ const ProfileEditPage = () => {
               Your profile is incomplete. Add at least one skill and one project to continue.
             </div>
           )}
-          <h1 className={styles.pageTitle}>Edit My Profile</h1>
-          <p className={styles.pageSubtitle}>Manage your skills and project experience for your CVs.</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <h1 className={styles.pageTitle}>Edit My Profile</h1>
+              <p className={styles.pageSubtitle}>Manage your skills and project experience for your CVs.</p>
+            </div>
+            {isComplete && (
+              <button className={styles.saveBtn} onClick={() => navigate('/cv-builder')} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#22c55e' }}>
+                Preview & Save CV <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />
+              </button>
+            )}
+          </div>
         </div>
+
+        {/* ── Personal Info Section */}
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.sectionIcon}><UserIcon size={18} /></span>
+              Personal & Contact Information
+            </h2>
+            <button className={styles.saveBtn} style={{ padding: '0.5rem 1rem' }} onClick={saveProfileDetails} disabled={profileSaving}>
+              {profileSaving ? 'Saving...' : <><Save size={14} style={{ marginRight: '0.3rem' }} /> Save Info</>}
+            </button>
+          </div>
+
+          <div className={styles.personalInfoLayout}>
+            <div className={styles.photoUploadContainer}>
+              <div className={styles.photoPreviewWrapper}>
+                {profileDetails.photo_url ? (
+                  <img src={profileDetails.photo_url} alt="Profile" className={styles.photoImage} />
+                ) : (
+                  <div className={styles.photoPlaceholder}><UserIcon size={40} /></div>
+                )}
+                {photoUploading && <div className={styles.photoLoadingOverlay}>Uploading...</div>}
+                <label className={styles.photoUploadBtn}>
+                  <Camera size={16} />
+                  <input type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} disabled={photoUploading} />
+                </label>
+              </div>
+              <span style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.5rem' }}>1:1 Aspect Ratio</span>
+            </div>
+
+            <div className={styles.formGrid} style={{ flex: 1 }}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Job Title</label>
+                <input className={styles.formInput} name="job_title" value={profileDetails.job_title} onChange={handleProfileChange} placeholder="e.g. Senior Developer" />
+              </div>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Years of Experience</label>
+                <input className={styles.formInput} name="experience_years" type="number" min="0" value={profileDetails.experience_years} onChange={handleProfileChange} />
+              </div>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Contact Email (for CV)</label>
+                <input className={styles.formInput} name="current_email" value={profileDetails.current_email} onChange={handleProfileChange} placeholder="e.g. john@example.com" />
+              </div>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Phone Number</label>
+                <input className={styles.formInput} name="phone" value={profileDetails.phone} onChange={handleProfileChange} placeholder="e.g. +1 234 567 890" />
+              </div>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>LinkedIn Profile URL</label>
+                <input className={styles.formInput} name="linkedin_url" value={profileDetails.linkedin_url} onChange={handleProfileChange} placeholder="https://linkedin.com/in/username" />
+              </div>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>GitHub Profile URL</label>
+                <input className={styles.formInput} name="github_url" value={profileDetails.github_url} onChange={handleProfileChange} placeholder="https://github.com/username" />
+              </div>
+              <div className={styles.formGroupFull}>
+                <label className={styles.formLabel}>Professional Summary</label>
+                <textarea className={styles.formTextarea} name="experience_summary" value={profileDetails.experience_summary} onChange={handleProfileChange} placeholder="Brief summary of your professional background..." />
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* ── Skills Section */}
         <section className={styles.section}>

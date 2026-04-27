@@ -32,3 +32,83 @@ export const getProfileStatus = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch profile status.' });
   }
 };
+
+export const getCompleteProfile = async (req, res) => {
+  const supabase = getSupabase();
+  try {
+    // Fetch profile details
+    const { data: profile, error: profileErr } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', req.user.id)
+      .single();
+
+    if (profileErr) throw profileErr;
+
+    // Fetch user details (email)
+    const { data: user, error: userError } = await supabase
+        .from('users')
+        .select('email')
+        .eq('id', req.user.id)
+        .single();
+    if(userError) throw userError;
+
+    // Fetch skills
+    const { data: skills, error: skillsErr } = await supabase
+      .from('profile_skills')
+      .select('proficiency, skills(id, name)')
+      .eq('profile_id', req.user.id);
+
+    if (skillsErr) throw skillsErr;
+
+    // Fetch projects
+    const { data: projects, error: projectsErr } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('profile_id', req.user.id)
+      .order('end_date', { ascending: false });
+
+    if (projectsErr) throw projectsErr;
+
+    res.json({
+      ...profile,
+      account_email: user.email,
+      skills: skills.map(s => ({
+        id: s.skills.id,
+        name: s.skills.name,
+        proficiency: s.proficiency
+      })),
+      projects
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch complete profile.' });
+  }
+};
+
+export const updateProfileDetails = async (req, res) => {
+  const supabase = getSupabase();
+  const { job_title, experience_summary, experience_years, phone, current_email, github_url, linkedin_url } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({
+        job_title,
+        experience_summary,
+        experience_years,
+        phone,
+        current_email,
+        github_url,
+        linkedin_url,
+        updated_at: new Date()
+      })
+      .eq('id', req.user.id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update profile.' });
+  }
+};

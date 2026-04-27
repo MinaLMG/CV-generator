@@ -15,6 +15,10 @@ CREATE TABLE profiles (
   experience_summary TEXT,
   experience_years INTEGER DEFAULT 0,
   photo_url TEXT,
+  phone TEXT,
+  current_email TEXT,
+  github_url TEXT,
+  linkedin_url TEXT,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

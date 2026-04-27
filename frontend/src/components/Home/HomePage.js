@@ -43,7 +43,7 @@ const HomePage = () => {
   return (
     <div className={styles.homeContainer}>
       <nav className={styles.nav}>
-        <h2 className={styles.logo}>CVGenie</h2>
+        <h2 className={styles.logo}>CV Genie</h2>
         <div className={styles.navRight}>
           <div className={styles.userInfo}>
             <UserIcon size={18} color="#94a3b8" />
@@ -89,9 +89,16 @@ const HomePage = () => {
           </div>
         </div>
 
-        <button className={styles.editBtn} onClick={() => navigate('/profile/edit')}>
-          Edit My Profile
-        </button>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <button className={styles.editBtn} onClick={() => navigate('/profile/edit')}>
+             Edit My Profile
+          </button>
+          {profileStatus?.isComplete && (
+            <button className={styles.editBtn} style={{ background: '#22c55e' }} onClick={() => navigate('/cv-builder')}>
+              Preview & Save CV
+            </button>
+          )}
+        </div>
       </main>
     </div>
   );

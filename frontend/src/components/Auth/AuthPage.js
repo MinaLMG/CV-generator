@@ -15,7 +15,7 @@ const AuthPage = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const AuthPage = () => {
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
       const response = await axios.post(`http://localhost:5000${endpoint}`, formData);
-      
+
       login(response.data.user, response.data.token);
       navigate('/');
     } catch (err) {
@@ -50,20 +50,20 @@ const AuthPage = () => {
             <div className={styles.logoIcon}>
               <Terminal size={32} color="#6366f1" />
             </div>
-            <h1>CVGenie</h1>
+            <h1>CV Genie</h1>
           </div>
           <p className={styles.subtitle}>Crafting your professional future with magic.</p>
         </div>
 
         <div className={styles.authTabs}>
-          <button 
-            className={`${styles.tabBtn} ${isLogin ? styles.active : ''}`} 
+          <button
+            className={`${styles.tabBtn} ${isLogin ? styles.active : ''}`}
             onClick={() => setIsLogin(true)}
           >
             Login
           </button>
-          <button 
-            className={`${styles.tabBtn} ${!isLogin ? styles.active : ''}`} 
+          <button
+            className={`${styles.tabBtn} ${!isLogin ? styles.active : ''}`}
             onClick={() => setIsLogin(false)}
           >
             Sign Up
@@ -125,15 +125,15 @@ const AuthPage = () => {
 
         <p className={styles.authFooter}>
           {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <span 
-            className={styles.toggleLink} 
+          <span
+            className={styles.toggleLink}
             onClick={() => setIsLogin(!isLogin)}
           >
             {isLogin ? 'Sign Up' : 'Login'}
           </span>
         </p>
       </div>
-      
+
       {/* Decorative background elements */}
       <div className={`${styles.bgBlob} ${styles.blob1}`}></div>
       <div className={`${styles.bgBlob} ${styles.blob2}`}></div>

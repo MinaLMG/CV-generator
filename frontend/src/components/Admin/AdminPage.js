@@ -150,7 +150,7 @@ const AdminPage = () => {
       {/* ── Nav */}
       <nav className={styles.nav}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <h2 className={styles.logo}>CVGenie</h2>
+          <h2 className={styles.logo}>CV Genie</h2>
           <span className={styles.adminBadge}>Admin</span>
         </div>
         <div className={styles.navActions}>
