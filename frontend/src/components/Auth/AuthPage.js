@@ -31,7 +31,7 @@ const AuthPage = () => {
 
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
-      const response = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}${endpoint}`, formData);
 
       login(response.data.user, response.data.token);
       navigate('/');
