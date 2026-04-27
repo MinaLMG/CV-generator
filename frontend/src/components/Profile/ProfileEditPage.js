@@ -278,7 +278,7 @@ const AddSkillModal = ({ onAdd, onClose, existingSkillIds }) => {
 
 // ─── Main Profile Edit Page ───────────────────────────────────────────────────
 const ProfileEditPage = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
 
   const [profileDetails, setProfileDetails] = useState({
@@ -289,7 +289,8 @@ const ProfileEditPage = () => {
     current_email: '',
     github_url: '',
     linkedin_url: '',
-    photo_url: ''
+    photo_url: '',
+    full_name: ''
   });
   const [profileSaving, setProfileSaving] = useState(false);
   const [photoUploading, setPhotoUploading] = useState(false);
@@ -312,6 +313,7 @@ const ProfileEditPage = () => {
       setProjects(pData || []);
       setSkills(sData || []);
       setProfileDetails({
+        full_name: details.full_name || '',
         job_title: details.job_title || '',
         experience_summary: details.experience_summary || '',
         experience_years: details.experience_years || 0,
@@ -322,6 +324,8 @@ const ProfileEditPage = () => {
         photo_url: details.photo_url || ''
       });
       setIsComplete(statusRes.data.isComplete);
+      // Keep AuthContext in sync so header greeting is always accurate
+      updateUser({ fullName: details.full_name });
     } catch (err) {
       console.error('Failed to load profile data', err);
     } finally {
@@ -339,6 +343,8 @@ const ProfileEditPage = () => {
     setProfileSaving(true);
     try {
       await API.put('/profile/me', profileDetails);
+      // Sync the header/dashboard name if it changed
+      updateUser({ fullName: profileDetails.full_name });
     } catch (err) {
       console.error('Failed to save profile details', err);
     } finally {
@@ -493,6 +499,10 @@ const ProfileEditPage = () => {
             </div>
 
             <div className={styles.formGrid} style={{ flex: 1 }}>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Full Name</label>
+                <input className={styles.formInput} name="full_name" value={profileDetails.full_name} onChange={handleProfileChange} placeholder="e.g. John Doe" />
+              </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>Job Title</label>
                 <input className={styles.formInput} name="job_title" value={profileDetails.job_title} onChange={handleProfileChange} placeholder="e.g. Senior Developer" />

@@ -87,12 +87,13 @@ export const getCompleteProfile = async (req, res) => {
 
 export const updateProfileDetails = async (req, res) => {
   const supabase = getSupabase();
-  const { job_title, experience_summary, experience_years, phone, current_email, github_url, linkedin_url } = req.body;
+  const { full_name, job_title, experience_summary, experience_years, phone, current_email, github_url, linkedin_url } = req.body;
 
   try {
     const { data, error } = await supabase
       .from('profiles')
       .update({
+        full_name,
         job_title,
         experience_summary,
         experience_years,
