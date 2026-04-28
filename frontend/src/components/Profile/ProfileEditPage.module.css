@@ -673,6 +673,15 @@
   margin-bottom: 1rem;
 }
 
+.successMsg {
+  color: #10b981;
+  font-size: 0.8rem;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }

@@ -8,4 +8,18 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+// Handle global response errors (like 401 Unauthorized)
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear session and redirect to login if unauthorized
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/auth';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default API;

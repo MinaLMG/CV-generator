@@ -294,6 +294,8 @@ const ProfileEditPage = () => {
   });
   const [profileSaving, setProfileSaving] = useState(false);
   const [photoUploading, setPhotoUploading] = useState(false);
+  const [profileError, setProfileError] = useState('');
+  const [profileSuccess, setProfileSuccess] = useState(false);
 
   const [projects, setProjects] = useState([]);
   const [skills, setSkills] = useState([]);
@@ -341,12 +343,17 @@ const ProfileEditPage = () => {
 
   const saveProfileDetails = async () => {
     setProfileSaving(true);
+    setProfileError('');
+    setProfileSuccess(false);
     try {
       await API.put('/profile/me', profileDetails);
       // Sync the header/dashboard name if it changed
       updateUser({ fullName: profileDetails.full_name });
+      setProfileSuccess(true);
+      setTimeout(() => setProfileSuccess(false), 3000);
     } catch (err) {
       console.error('Failed to save profile details', err);
+      setProfileError(err.response?.data?.error || 'Failed to save profile details.');
     } finally {
       setProfileSaving(false);
     }
@@ -480,6 +487,9 @@ const ProfileEditPage = () => {
               {profileSaving ? 'Saving...' : <><Save size={14} style={{ marginRight: '0.3rem' }} /> Save Info</>}
             </button>
           </div>
+
+          {profileError && <div className={styles.errorMsg} style={{ margin: '0 0 1rem 0' }}>{profileError}</div>}
+          {profileSuccess && <div className={styles.successMsg} style={{ margin: '0 0 1rem 0' }}>Profile updated successfully!</div>}
 
           <div className={styles.personalInfoLayout}>
             <div className={styles.photoUploadContainer}>
