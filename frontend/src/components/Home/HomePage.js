@@ -10,24 +10,27 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [profileStatus, setProfileStatus] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const checkProfile = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await API.get('/profile/status');
+      setProfileStatus(res.data);
+
+      if (!res.data.isComplete) {
+        navigate('/profile/edit');
+      }
+    } catch (err) {
+      console.error('Failed to check profile status', err);
+      setError('Could not connect to the server. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const checkProfile = async () => {
-      try {
-        const res = await API.get('/profile/status');
-        setProfileStatus(res.data);
-
-        // If profile is incomplete, redirect to edit profile
-        if (!res.data.isComplete) {
-          navigate('/profile/edit');
-        }
-      } catch (err) {
-        console.error('Failed to check profile status', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     checkProfile();
   }, [navigate]);
 
@@ -36,6 +39,19 @@ const HomePage = () => {
       <div className={styles.loadingScreen}>
         <Loader size={40} className={styles.spinner} />
         <p>Loading your workspace...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.errorScreen}>
+        <AlertCircle size={48} color="#ef4444" />
+        <h1>Connection Issue</h1>
+        <p>{error}</p>
+        <button onClick={checkProfile} className={styles.retryBtn}>
+          Try Again
+        </button>
       </div>
     );
   }

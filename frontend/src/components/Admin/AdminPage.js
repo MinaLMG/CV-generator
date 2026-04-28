@@ -5,7 +5,8 @@ import API from '../../services/api';
 import styles from './AdminPage.module.css';
 import {
   ArrowLeft, LogOut, Users, Briefcase, Zap,
-  CheckCircle, XCircle, Plus, Pencil, Trash2, Save, X, LayoutTemplate
+  CheckCircle, XCircle, Plus, Pencil, Trash2, Save, X, LayoutTemplate,
+  AlertCircle
 } from 'lucide-react';
 
 // ─── Skill Row (inline edit) ──────────────────────────────────────────────────
@@ -91,6 +92,7 @@ const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [newSkillName, setNewSkillName] = useState('');
   const [addError, setAddError] = useState('');
+  const [generalError, setGeneralError] = useState('');
   const [adding, setAdding] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -131,14 +133,24 @@ const AdminPage = () => {
   };
 
   const handleUpdateSkill = async (id, name) => {
-    const res = await API.put(`/admin/skills/${id}`, { name });
-    setSkills(skills.map(s => s.id === id ? { ...s, name: res.data.name } : s));
+    setGeneralError('');
+    try {
+      const res = await API.put(`/admin/skills/${id}`, { name });
+      setSkills(skills.map(s => s.id === id ? { ...s, name: res.data.name } : s));
+    } catch (err) {
+      setGeneralError(err.response?.data?.error || 'Failed to update skill.');
+    }
   };
 
   const handleDeleteSkill = async (id) => {
-    await API.delete(`/admin/skills/${id}`);
-    setSkills(skills.filter(s => s.id !== id));
-    setStats(s => ({ ...s, totalSkills: s.totalSkills - 1 }));
+    setGeneralError('');
+    try {
+      await API.delete(`/admin/skills/${id}`);
+      setSkills(skills.filter(s => s.id !== id));
+      setStats(s => ({ ...s, totalSkills: s.totalSkills - 1 }));
+    } catch (err) {
+      setGeneralError(err.response?.data?.error || 'Failed to delete skill.');
+    }
   };
 
   const formatDate = (d) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -195,6 +207,13 @@ const AdminPage = () => {
               <span className={styles.statValue}>{stats.totalProjects}</span>
               <span className={styles.statLabel}>Total Projects</span>
             </div>
+          </div>
+        )}
+
+        {generalError && (
+          <div className={styles.generalError}>
+            <AlertCircle size={16} /> {generalError}
+            <button onClick={() => setGeneralError('')} className={styles.dismissBtn}>Dismiss</button>
           </div>
         )}
 
@@ -282,8 +301,8 @@ const AdminPage = () => {
                     </td>
                     <td>{formatDate(u.created_at)}</td>
                     <td>
-                      <button 
-                        className={styles.editBtn} 
+                      <button
+                        className={styles.editBtn}
                         onClick={() => navigate(`/cv-builder?userId=${u.id}`)}
                         title="Build CV for this user"
                       >

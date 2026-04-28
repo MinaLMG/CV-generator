@@ -10,9 +10,9 @@ export const getAllSkills = async (req, res) => {
       .order('name', { ascending: true });
 
     if (error) throw error;
-    res.json(data);
+    return res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch skills.' });
+    return res.status(500).json({ error: 'Failed to fetch skills.' });
   }
 };
 
@@ -35,9 +35,9 @@ export const createSkill = async (req, res) => {
       }
       throw error;
     }
-    res.status(201).json(data);
+    return res.status(201).json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create skill.' });
+    return res.status(500).json({ error: 'Failed to create skill.' });
   }
 };
 
@@ -57,9 +57,9 @@ export const getProfileSkills = async (req, res) => {
       name: item.skills.name,
       proficiency: item.proficiency
     }));
-    res.json(formatted);
+    return res.json(formatted);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch profile skills.' });
+    return res.status(500).json({ error: 'Failed to fetch profile skills.' });
   }
 };
 
@@ -100,10 +100,10 @@ export const addSkillToProfile = async (req, res) => {
       throw linkError;
     }
 
-    res.status(201).json({ message: 'Skill added to profile.' });
+    return res.status(201).json({ message: 'Skill added to profile.' });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: 'Failed to add skill to profile.' });
+    return res.status(500).json({ error: 'Failed to add skill to profile.' });
   }
 };
 
@@ -126,9 +126,9 @@ export const updateSkillProficiency = async (req, res) => {
       .eq('skill_id', id);
 
     if (error) throw error;
-    res.json({ message: 'Proficiency updated.' });
+    return res.json({ message: 'Proficiency updated.' });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update proficiency.' });
+    return res.status(500).json({ error: 'Failed to update proficiency.' });
   }
 };
 
@@ -144,8 +144,8 @@ export const removeSkillFromProfile = async (req, res) => {
       .eq('skill_id', id);
 
     if (error) throw error;
-    res.json({ message: 'Skill removed from profile.' });
+    return res.json({ message: 'Skill removed from profile.' });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to remove skill.' });
+    return res.status(500).json({ error: 'Failed to remove skill.' });
   }
 };

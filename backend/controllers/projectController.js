@@ -11,9 +11,9 @@ export const getProjects = async (req, res) => {
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    res.json(data);
+    return res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch projects.' });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -31,10 +31,10 @@ export const createProject = async (req, res) => {
       .single();
 
     if (error) throw error;
-    res.status(201).json(data);
+    return res.status(201).json(data);
   } catch (err) {
     console.error('[createProject]', err);
-    res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -55,10 +55,10 @@ export const updateProject = async (req, res) => {
       .single();
 
     if (error) throw error;
-    res.json(data);
+    return res.json(data);
   } catch (err) {
     console.error('[updateProject]', err);
-    res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: err.message });
   }
 };
 
@@ -73,8 +73,8 @@ export const deleteProject = async (req, res) => {
       .eq('profile_id', req.user.id);
 
     if (error) throw error;
-    res.json({ message: 'Project deleted successfully' });
+    return res.json({ message: 'Project deleted.' });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: err.message });
   }
 };

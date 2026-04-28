@@ -37,7 +37,7 @@ export const getStats = async (req, res) => {
       .select('*', { count: 'exact', head: true });
     if (projectsError) throw projectsError;
 
-    res.json({
+    return res.json({
       totalUsers,
       completeProfiles: completeCount,
       incompleteProfiles: totalUsers - completeCount,
@@ -45,7 +45,7 @@ export const getStats = async (req, res) => {
       totalProjects
     });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch stats.' });
+    return res.status(500).json({ error: 'Failed to fetch stats.' });
   }
 };
 
@@ -59,9 +59,9 @@ export const getAllUsers = async (req, res) => {
       .order('created_at', { ascending: false });
 
     if (error) throw error;
-    res.json(data);
+    return res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch users.' });
+    return res.status(500).json({ error: 'Failed to fetch users.' });
   }
 };
 
@@ -104,7 +104,7 @@ export const adminGetCompleteProfile = async (req, res) => {
 
     if (projectsErr) throw projectsErr;
 
-    res.json({
+    return res.json({
       ...profile,
       account_email: user.email,
       skills: skills.map(s => ({
@@ -115,7 +115,7 @@ export const adminGetCompleteProfile = async (req, res) => {
       projects
     });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch complete profile for admin view.' });
+    return res.status(500).json({ error: 'Failed to fetch complete profile for admin view.' });
   }
 };
 
@@ -137,9 +137,9 @@ export const adminGetAllSkills = async (req, res) => {
       usedBy: s.profile_skills?.[0]?.count || 0
     }));
 
-    res.json(formatted);
+    return res.json(formatted);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch skills.' });
+    return res.status(500).json({ error: 'Failed to fetch skills.' });
   }
 };
 
@@ -161,9 +161,9 @@ export const adminCreateSkill = async (req, res) => {
       }
       throw error;
     }
-    res.status(201).json(data);
+    return res.status(201).json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to create skill.' });
+    return res.status(500).json({ error: 'Failed to create skill.' });
   }
 };
 
@@ -187,9 +187,9 @@ export const adminUpdateSkill = async (req, res) => {
       }
       throw error;
     }
-    res.json(data);
+    return res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update skill.' });
+    return res.status(500).json({ error: 'Failed to update skill.' });
   }
 };
 
@@ -204,8 +204,8 @@ export const adminDeleteSkill = async (req, res) => {
       .eq('id', id);
 
     if (error) throw error;
-    res.json({ message: 'Skill deleted. All profile references removed automatically.' });
+    return res.json({ message: 'Skill deleted. All profile references removed automatically.' });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to delete skill.' });
+    return res.status(500).json({ error: 'Failed to delete skill.' });
   }
 };

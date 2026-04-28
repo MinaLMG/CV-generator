@@ -43,6 +43,6 @@ export const uploadProfilePhoto = async (req, res) => {
       try { fs.unlinkSync(file.path); } catch (_) { /* already gone */ }
     }
     console.error('[uploadProfilePhoto]', err);
-    res.status(500).json({ error: 'Server error during upload.' });
+    return res.status(500).json({ error: 'Server error during upload.' });
   }
 };

@@ -372,9 +372,11 @@ const ProfileEditPage = () => {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setProfileDetails(prev => ({ ...prev, photo_url: res.data.photo_url }));
+      setProfileSuccess(true);
+      setTimeout(() => setProfileSuccess(false), 3000);
     } catch (err) {
       console.error('Failed to upload photo', err);
-      alert('Failed to upload photo. Please try again.');
+      setProfileError(err.response?.data?.error || 'Failed to upload photo. Please try again.');
     } finally {
       setPhotoUploading(false);
     }
@@ -382,19 +384,27 @@ const ProfileEditPage = () => {
 
   // ── Skills
   const handleRemoveSkill = async (skillId) => {
+    setProfileError('');
     try {
       await API.delete(`/skills/profile/${skillId}`);
       setSkills(skills.filter((s) => s.id !== skillId));
       const statusRes = await API.get('/profile/status');
       setIsComplete(statusRes.data.isComplete);
-    } catch (err) { console.error(err); }
+    } catch (err) { 
+      console.error(err); 
+      setProfileError(err.response?.data?.error || 'Failed to remove skill.');
+    }
   };
 
   const handleUpdateProficiency = async (skillId, proficiency) => {
+    setProfileError('');
     try {
       await API.patch(`/skills/profile/${skillId}`, { proficiency });
       setSkills(skills.map(s => s.id === skillId ? { ...s, proficiency } : s));
-    } catch (err) { console.error(err); }
+    } catch (err) { 
+      console.error(err); 
+      setProfileError(err.response?.data?.error || 'Failed to update proficiency.');
+    }
   };
 
   // ── Projects
@@ -412,12 +422,16 @@ const ProfileEditPage = () => {
 
   const handleDeleteProject = async (id) => {
     if (!window.confirm('Are you sure you want to delete this project?')) return;
+    setProfileError('');
     try {
       await API.delete(`/projects/${id}`);
       setProjects(projects.filter((p) => p.id !== id));
       const statusRes = await API.get('/profile/status');
       setIsComplete(statusRes.data.isComplete);
-    } catch (err) { console.error(err); }
+    } catch (err) { 
+      console.error(err); 
+      setProfileError(err.response?.data?.error || 'Failed to delete project.');
+    }
   };
 
   const formatDate = (dateStr) => {

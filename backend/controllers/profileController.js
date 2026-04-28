@@ -116,8 +116,8 @@ export const updateProfileDetails = async (req, res) => {
       .single();
 
     if (error) throw error;
-    res.json(data);
+    return res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update profile.' });
+    return res.status(500).json({ error: 'Failed to update profile.' });
   }
 };
