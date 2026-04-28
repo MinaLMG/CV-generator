@@ -1,4 +1,5 @@
 import { getSupabase } from '../utils/supabaseHelper.js';
+import { validateProject } from '../utils/validators.js';
 
 export const getProjects = async (req, res) => {
   const supabase = getSupabase();
@@ -18,22 +19,21 @@ export const getProjects = async (req, res) => {
 
 export const createProject = async (req, res) => {
   const supabase = getSupabase();
-  try {
-    if (req.body.start_date && req.body.end_date) {
-      if (new Date(req.body.start_date) > new Date(req.body.end_date)) {
-        return res.status(400).json({ error: 'Start date must be before end date.' });
-      }
-    }
 
+  const { error: validationError, data: projectData } = validateProject(req.body);
+  if (validationError) return res.status(400).json({ error: validationError });
+
+  try {
     const { data, error } = await supabase
       .from('projects')
-      .insert([{ ...req.body, profile_id: req.user.id }])
+      .insert([{ ...projectData, profile_id: req.user.id }])
       .select()
       .single();
 
     if (error) throw error;
     res.status(201).json(data);
   } catch (err) {
+    console.error('[createProject]', err);
     res.status(400).json({ error: err.message });
   }
 };
@@ -41,16 +41,14 @@ export const createProject = async (req, res) => {
 export const updateProject = async (req, res) => {
   const { id } = req.params;
   const supabase = getSupabase();
-  try {
-    if (req.body.start_date && req.body.end_date) {
-      if (new Date(req.body.start_date) > new Date(req.body.end_date)) {
-        return res.status(400).json({ error: 'Start date must be before end date.' });
-      }
-    }
 
+  const { error: validationError, data: projectData } = validateProject(req.body);
+  if (validationError) return res.status(400).json({ error: validationError });
+
+  try {
     const { data, error } = await supabase
       .from('projects')
-      .update(req.body)
+      .update(projectData)
       .eq('id', id)
       .eq('profile_id', req.user.id)
       .select()
@@ -59,6 +57,7 @@ export const updateProject = async (req, res) => {
     if (error) throw error;
     res.json(data);
   } catch (err) {
+    console.error('[updateProject]', err);
     res.status(400).json({ error: err.message });
   }
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User, Terminal } from 'lucide-react';
-import axios from 'axios';
+import API from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import styles from './AuthPage.module.css';
 
@@ -26,12 +26,27 @@ const AuthPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
 
+    // ── Client-side validation ──────────────────────────────────────────
+    if (!isLogin) {
+      if (!formData.fullName?.trim() || formData.fullName.trim().length < 2) {
+        return setError('Full name must be at least 2 characters.');
+      }
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      return setError('Please enter a valid email address.');
+    }
+    if (formData.password.length < 8) {
+      return setError('Password must be at least 8 characters.');
+    }
+    // ───────────────────────────────────────────────────────────────────
+
+    setLoading(true);
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/signup';
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}${endpoint}`, formData);
+      const response = await API.post(endpoint, formData);
 
       login(response.data.user, response.data.token);
       navigate('/');

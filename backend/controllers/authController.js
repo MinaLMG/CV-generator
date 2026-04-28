@@ -1,14 +1,19 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getSupabase } from '../utils/supabaseHelper.js';
+import { validateSignup, validateLogin } from '../utils/validators.js';
 
 
 export const signup = async (req, res) => {
   const { email, password, fullName } = req.body;
+
+  const validationError = validateSignup({ email, password, fullName });
+  if (validationError) return res.status(400).json({ error: validationError });
+
   const supabase = getSupabase();
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password.trim(), 10);
 
     const { data: userData, error: userError } = await supabase
       .from('users')
@@ -42,13 +47,18 @@ export const signup = async (req, res) => {
       user: { id: userData.id, email: userData.email, fullName, role: userData.role }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message || 'Server error during signup.' });
+    console.error('[signup]', err);
+    res.status(500).json({ error: 'Server error during signup.' });
   }
 };
 
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
+
+  const validationError = validateLogin({ email, password });
+  if (validationError) return res.status(400).json({ error: validationError });
+
   const supabase = getSupabase();
 
   try {

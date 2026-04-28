@@ -5,11 +5,11 @@ import os from 'os';
 
 // Determine upload directory
 // Vercel/Serverless: Use /tmp (Note: Files are ephemeral!)
-// Local: Use 'uploads/pharmacy_docs'
+// Local: Use 'uploads/cv_genie_profiles'
 const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
 const uploadDir = isProduction
-    ? path.join(os.tmpdir(), 'pharmacy_docs')
-    : 'uploads/pharmacy_docs';
+    ? path.join(os.tmpdir(), 'cv_genie_profiles')
+    : 'uploads/cv_genie_profiles';
 
 // Ensure directory exists
 try {

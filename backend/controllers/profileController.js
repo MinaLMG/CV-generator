@@ -1,4 +1,5 @@
 import { getSupabase } from '../utils/supabaseHelper.js';
+import { validateProfileUpdate } from '../utils/validators.js';
 
 export const getProfileStatus = async (req, res) => {
   const supabase = getSupabase();
@@ -87,7 +88,14 @@ export const getCompleteProfile = async (req, res) => {
 
 export const updateProfileDetails = async (req, res) => {
   const supabase = getSupabase();
-  const { full_name, job_title, experience_summary, experience_years, phone, current_email, github_url, linkedin_url } = req.body;
+  const {
+    full_name, job_title, experience_summary,
+    experience_years, phone, current_email,
+    github_url, linkedin_url
+  } = req.body;
+
+  const validationError = validateProfileUpdate({ experience_years, github_url, linkedin_url, phone, current_email });
+  if (validationError) return res.status(400).json({ error: validationError });
 
   try {
     const { data, error } = await supabase
